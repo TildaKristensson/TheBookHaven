@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TheBookHaven.ViewModel;
 
 namespace TheBookHaven
 {
@@ -19,6 +20,8 @@ namespace TheBookHaven
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainWindowViewModel();
         }
     }
 }
