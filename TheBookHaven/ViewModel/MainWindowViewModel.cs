@@ -13,18 +13,15 @@ namespace TheBookHaven.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        private readonly TheBookHavenContext _context;
         public WelcomeViewModel WelcomeViewModel { get; }
         public RelayCommand EnterTheBookHavenCommand { get; }
 
         public BookStockViewModel BookStockViewModel { get; }
 
-        
-
         public ObservableCollection<BookStore> BookStores { get; set; }
         
 
-        private ObservableCollection<BookStockViewModel> _stockItems;
+        private ObservableCollection<BookStockViewModel> _stockItems = new();
         public ObservableCollection<BookStockViewModel> StockItems
         {
             get => _stockItems;
@@ -32,6 +29,18 @@ namespace TheBookHaven.ViewModel
             {
                 _stockItems = value;
                 RaisePropertyChanged(nameof(StockItems));   
+            }
+        }
+
+        private BookStockViewModel _selectedStockItem;
+
+        public BookStockViewModel SelectedStockItem
+        {
+            get => _selectedStockItem;
+            set
+            {
+                _selectedStockItem = value;
+                RaisePropertyChanged(nameof(SelectedStockItem));
             }
         }
 
@@ -73,9 +82,8 @@ namespace TheBookHaven.ViewModel
         }
         public MainWindowViewModel()
         {
-            //using var db = new TheBookHavenContext();
-
-            _context = new TheBookHavenContext();
+           
+            using var context = new TheBookHavenContext();
 
             WelcomeViewModel = new WelcomeViewModel(this);
 
@@ -84,8 +92,8 @@ namespace TheBookHaven.ViewModel
 
             EnterTheBookHavenCommand = new RelayCommand(EnterTheBookHaven);
 
-            BookStores = new ObservableCollection<BookStore>(_context.BookStores.ToList());
-
+            BookStores = new ObservableCollection<BookStore>(context.BookStores.ToList());
+            
         }
 
         private void EnterTheBookHaven(object obj)
@@ -98,9 +106,10 @@ namespace TheBookHaven.ViewModel
         {
             if (SelectedStore != null)
             {
-                var stockItems = _context.StockBalances
+                using var context = new TheBookHavenContext();
+                var stockItems = context.StockBalances
                     .Where(sb => sb.BookStoreId == SelectedStore.Id)
-                    .Include(sb => sb.IsbnNavigation)
+                    .Include(sb => sb.IsbnNavigation.Authors)
                     .ToList();
 
                 StockItems.Clear();
