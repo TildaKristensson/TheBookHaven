@@ -9,7 +9,7 @@ using TheBookHaven.Model;
 
 namespace TheBookHaven.ViewModel
 {
-    class BookStockViewModel 
+    class BookStockViewModel : ViewModelBase
     {
 
         public string Title { get; set; }
@@ -44,6 +44,7 @@ namespace TheBookHaven.ViewModel
         {
             StockBalance++;
             _stockBalance.UnitsInStock = StockBalance;
+            RaisePropertyChanged(nameof(StockBalance));
             UpdateStockInDatabase();
         }
 
@@ -54,6 +55,7 @@ namespace TheBookHaven.ViewModel
             {
                 StockBalance--;
                 _stockBalance.UnitsInStock = StockBalance;
+                RaisePropertyChanged(nameof(StockBalance));
                 UpdateStockInDatabase();
             }
         }

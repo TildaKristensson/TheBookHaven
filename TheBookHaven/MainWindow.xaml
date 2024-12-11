@@ -9,6 +9,7 @@
         xmlns:viewmodel="clr-namespace:TheBookHaven.ViewModel" 
         xmlns:converters="clr-namespace:TheBookHaven.Converters" d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
+        Background="Bisque"
         Title="The Book Haven" Height="480" Width="800">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
@@ -28,74 +29,95 @@
             </Grid.ColumnDefinitions>
 
         <TextBlock Text="Bookstores"
-                       Height="25"
-                       Width="150"
-                       FontSize="20"
-                       FontFamily="Baskerville Old Face"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Margin="15"/>
+                    Height="25"
+                    Width="150"
+                    FontSize="20"
+                    FontFamily="Baskerville Old Face"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="15"/>
+            
             <ListBox Grid.Column="0"
                     Height="350"
                     Margin="7,50,3,34"
+                     Background="SeaShell"
                     SelectionMode="Single"
                     ItemsSource="{Binding BookStores}"
                     SelectedItem="{Binding SelectedStore, Mode=TwoWay}" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Text="{Binding Name}" 
+                                   FontSize="15"
+                                   Margin="0, 10, 10, 10"
+                                   FontFamily="Baskerville Old Face"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-        <Button x:Name="AddButton"
+            <TextBlock Grid.Column="1"
+                    Text="Stock"
+                    Height="25"
+                    Width="150"
+                    FontSize="20"
+                    FontFamily="Baskerville Old Face"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="15" />
+
+            <Button x:Name="AddButton"
+                    Content="Buy" 
+                    FontFamily="Baskerville Old Face"
+                    Background="SeaShell"
                 Grid.Column="1"
                 Height="40"
                 Width="40"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="212,5,0,5"
+                Margin="350,10,0,0"
                 Command="{Binding SelectedStockItem.AddToStockCommand}"
                 IsEnabled="{Binding SelectedStockItem, Converter={StaticResource NullToBoolConverter}}">
-            <Button.Content>
-                <fa:IconBlock Icon="HeartCirclePlus" />
-            </Button.Content>
+
         </Button>
 
-        <Button x:Name="RemoveButton"
+            <Button x:Name="RemoveButton"
+                    Content="Sell" 
+                    FontFamily="Baskerville Old Face"
+                    Background="SeaShell"
                 Grid.Column="1"
                 Height="40"
                 Width="40"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="287,5,0,5"
+                Margin="400,10,0,0"
                 Command="{Binding SelectedStockItem.RemoveFromStockCommand}"
                 IsEnabled="{Binding SelectedStockItem, Converter={StaticResource NullToBoolConverter}}">
-            <Button.Content>
-                <fa:IconBlock Icon="HeartCircleMinus" />
-            </Button.Content>
-        </Button>
+            </Button>
 
         <DataGrid Grid.Column="1"
                     Height="350"
                     Margin="2,50,2,34"
+                  RowHeight="25"
+                  Background="SeaShell"
+                  AlternationCount="2"
+                  RowBackground="SeaShell"
+                  AlternatingRowBackground="White"
                     ItemsSource="{Binding StockItems}"
                   SelectedItem="{Binding SelectedStockItem, Mode=TwoWay}"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" 
-                                    Width="*"
+                                    Width="2*"
                                     Binding="{Binding Title}"/>
                 <DataGridTextColumn Header="ISBN" 
-                                    Width="*"
+                                    Width="2*"
                                     Binding="{Binding Isbn}"/>
                 <DataGridTextColumn Header="Author" 
-                                    Width="*"
+                                    Width="2*"
                                     Binding="{Binding Author}"/>
                 <DataGridTextColumn Header="Price" 
                                     Width="*"
-                                    Binding="{Binding Price}"/>
-                <DataGridTextColumn Header="Stockbalance" 
+                                    Binding="{Binding Price, StringFormat='{}{0} kr'}"/>
+                <DataGridTextColumn Header="In stock" 
                                     Width="*"
                                     Binding="{Binding StockBalance}"/>
             </DataGrid.Columns>
