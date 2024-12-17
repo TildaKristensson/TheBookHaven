@@ -1,6 +1,6 @@
 # The Book Haven - A Bookstore Chain Inventory App
 
-For an assignment at IT-Högskolan.
+For an assignment at IT-Högskolan, while learning to use Entity Framework Core.
 
 I've created a database for the mock-up bookstore chain "The Book Haven" with some data for demonstration. For this I've developed an application using WPF where the user can choose from the existing bookstores and see the inventory for each store and book in the store. 
 The user can select a book and add, as well as remove, (or buy, and sell) from the choosen bookstore.  
