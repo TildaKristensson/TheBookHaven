@@ -97,6 +97,7 @@
                     Height="350"
                     Margin="2,50,2,34"
                   RowHeight="25"
+                  SelectionMode="Single"
                   Background="SeaShell"
                   AlternationCount="2"
                   RowBackground="SeaShell"
